@@ -31,6 +31,6 @@
 #ifdef POINTING_DEVICE_ENABLE
 // Automatically enable the pointer layer when moving the trackball
 #    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-// La capa 4 (LAYER_POINTER) se activará automáticamente
-// Timeout y threshold ya están definidos en keymap.c
+#    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS 1000
+#    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD 8
 #endif // POINTING_DEVICE_ENABLE
