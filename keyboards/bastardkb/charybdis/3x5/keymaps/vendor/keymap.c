@@ -160,7 +160,7 @@ static uint16_t auto_pointer_layer_timer = 0;
  */
 #define LAYOUT_LAYER_SYMBOLS                                                                  \
     LALT(KC_QUOT), KC_CIRC, LSFT(KC_RBRC), KC_ASTR, LALT(KC_BSLS), _______________DEAD_HALF_ROW_______________, \
-    LSFT(KC_DOT),  KC_DLR, KC_PERC, LSFT(KC_LBRC), KC_RBRC, ______________HOME_ROW_GACS_R______________, \
+    KC_GRV,  KC_DLR, KC_PERC, LSFT(KC_LBRC), KC_RBRC, ______________HOME_ROW_GACS_R______________, \
     KC_EQL, KC_EXLM,   LALT(KC_2), LALT(KC_3), LALT(KC_1), _______________DEAD_HALF_ROW_______________, \
                       KC_ASTR, KC_LPRN, KC_UNDS, _______, XXXXXXX
 
