@@ -310,13 +310,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        case MC_N_TILDE:
-            if (record->event.pressed) {
-                tap_code(KC_QUOT);
-                tap_code(KC_N);
-            }
-            return false;
-
             // simbolos
         case MC_BCSL:
             if (record->event.pressed) {
