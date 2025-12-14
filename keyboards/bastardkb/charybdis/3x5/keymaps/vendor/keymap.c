@@ -27,7 +27,6 @@ enum custom_keycodes {
     MC_I_TILDE,              // Macro: envía ' + i
     MC_O_TILDE,              // Macro: envía ' + o
     MC_U_TILDE,              // Macro: envía ' + u
-    MC_BCSL,                 // back slash,
 };
 
 enum charybdis_keymap_layers {
@@ -149,7 +148,7 @@ static uint16_t auto_pointer_layer_timer = 0;
 #define LAYOUT_LAYER_NUMERAL                                                                  \
     LALT(KC_LBRC),    KC_7,    KC_8,    KC_9, LALT(KC_RBRC), _______________DEAD_HALF_ROW_______________, \
     KC_MINS,    KC_4,    KC_5,    KC_6,  LSFT(KC_0), ______________HOME_ROW_GACS_R______________, \
-     KC_LBRC,    KC_1,    KC_2,    KC_3, KC_NONUS_BACKSLASH, _______________DEAD_HALF_ROW_______________, \
+     KC_LBRC,    KC_1,    KC_2,    KC_3, LALT(KC_NONUS_BACKSLASH), _______________DEAD_HALF_ROW_______________, \
                        KC_DOT,    KC_0, KC_SLSH, XXXXXXX, _______
 
 /**
@@ -305,13 +304,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 tap_code(KC_QUOT);
                 tap_code(KC_U);
-            }
-            return false;
-
-            // simbolos
-        case MC_BCSL:
-            if (record->event.pressed) {
-                SEND_STRING("\\");
             }
             return false;
     }
