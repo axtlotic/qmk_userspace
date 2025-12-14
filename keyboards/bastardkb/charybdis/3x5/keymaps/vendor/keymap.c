@@ -20,6 +20,18 @@
 #    include "timer.h"
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
+// ========== MACROS PARA TILDES ==========
+enum custom_keycodes {
+    MC_A_TILDE = SAFE_RANGE, // Macro: envía ' + a
+    MC_E_TILDE,              // Macro: envía ' + e
+    MC_I_TILDE,              // Macro: envía ' + i
+    MC_O_TILDE,              // Macro: envía ' + o
+    MC_U_TILDE,              // Macro: envía ' + u
+    MC_BCSL,                 // back slash,
+    MC_LCBR,                 // {
+    MC_RCBR,                 // }
+};
+
 enum charybdis_keymap_layers {
     LAYER_BASE = 0,
     LAYER_FUNCTION,
@@ -28,6 +40,7 @@ enum charybdis_keymap_layers {
     LAYER_POINTER,
     LAYER_NUMERAL,
     LAYER_SYMBOLS,
+    LAYER_TILDES, // Capa 7 para tildes
 };
 
 // Automatically enable sniping-mode on the pointer layer.
@@ -63,8 +76,8 @@ static uint16_t auto_pointer_layer_timer = 0;
 /** \brief QWERTY layout (3 rows, 10 columns). */
 #define LAYOUT_LAYER_BASE                                                                     \
        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, \
-       KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L, KC_QUOT, \
-       KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, \
+       KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, \
+       KC_Z,    KC_X,    KC_C,    LT(7,KC_V),    KC_B,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, \
                       ESC_MED, SPC_NAV, TAB_FUN, ENT_SYM, BSP_NUM
 
 /** Convenience row shorthands. */
@@ -124,11 +137,10 @@ static uint16_t auto_pointer_layer_timer = 0;
  * base layer to avoid having to layer change mid edit and to enable auto-repeat.
  */
 #define LAYOUT_LAYER_NAVIGATION                                                               \
-    _______________DEAD_HALF_ROW_______________, _______________DEAD_HALF_ROW_______________, \
+    XXXXXXX, XXXXXXX, MC_E_TILDE, XXXXXXX, XXXXXXX, XXXXXXX, MC_U_TILDE, MC_I_TILDE, MC_O_TILDE, XXXXXXX, \
     ______________HOME_ROW_GACS_L______________, KC_CAPS, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, \
     _______________DEAD_HALF_ROW_______________,  KC_INS, KC_HOME, KC_PGDN, KC_PGUP,  KC_END, \
                       XXXXXXX, _______, XXXXXXX,  KC_ENT, KC_BSPC
-
 /**
  * \brief Numeral layout.
  *
@@ -137,10 +149,10 @@ static uint16_t auto_pointer_layer_timer = 0;
  * `KC_DOT` is duplicated from the base layer.
  */
 #define LAYOUT_LAYER_NUMERAL                                                                  \
-    KC_LBRC,    KC_7,    KC_8,    KC_9, KC_RBRC, _______________DEAD_HALF_ROW_______________, \
-    KC_SCLN,    KC_4,    KC_5,    KC_6,  KC_EQL, ______________HOME_ROW_GACS_R______________, \
-     KC_GRV,    KC_1,    KC_2,    KC_3, KC_BSLS, _______________DEAD_HALF_ROW_______________, \
-                       KC_DOT,    KC_0, KC_MINS, XXXXXXX, _______
+    LALT(KC_LBRC),    KC_7,    KC_8,    KC_9, LALT(KC_RBRC), _______________DEAD_HALF_ROW_______________, \
+    KC_MINS,    KC_4,    KC_5,    KC_6,  LALT(KC_0), ______________HOME_ROW_GACS_R______________, \
+     KC_LBRC,    KC_1,    KC_2,    KC_3, MC_BCSL, _______________DEAD_HALF_ROW_______________, \
+                       KC_DOT,    KC_0, KC_SLSH, XXXXXXX, _______
 
 /**
  * \brief Symbols layer.
@@ -150,11 +162,20 @@ static uint16_t auto_pointer_layer_timer = 0;
  * `KC_RPRN`.
  */
 #define LAYOUT_LAYER_SYMBOLS                                                                  \
-    KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR, _______________DEAD_HALF_ROW_______________, \
-    KC_COLN,  KC_DLR, KC_PERC, KC_CIRC, KC_PLUS, ______________HOME_ROW_GACS_R______________, \
-    KC_TILD, KC_EXLM,   KC_AT, KC_HASH, KC_PIPE, _______________DEAD_HALF_ROW_______________, \
-                      KC_LPRN, KC_RPRN, KC_UNDS, _______, XXXXXXX
+    LALT(KC_QUOT), KC_CIRC, LSFT(KC_RBRC), KC_ASTR, LALT(KC_BSLS), _______________DEAD_HALF_ROW_______________, \
+    LSFT(KC_DOT),  KC_DLR, KC_PERC, LSFT(KC_LBRC), KC_RBRC, ______________HOME_ROW_GACS_R______________, \
+    KC_EQL, KC_EXLM,   LALT(KC_2), LALT(KC_3), LALT(KC_1), _______________DEAD_HALF_ROW_______________, \
+                      KC_ASTR, KC_LPRN, KC_UNDS, _______, XXXXXXX
 
+/**
+ * \brief Tilde layer.
+ *
+ */
+#define LAYOUT_LAYER_TILDES                                                                   \
+    XXXXXXX, XXXXXXX, MC_E_TILDE, XXXXXXX, XXXXXXX, XXXXXXX, MC_U_TILDE, MC_I_TILDE, MC_O_TILDE, XXXXXXX, \
+    MC_A_TILDE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 /**
  * \brief Add Home Row mod to a layout.
  *
@@ -212,6 +233,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_NUMERAL] = LAYOUT_wrapper(LAYOUT_LAYER_NUMERAL),
   [LAYER_POINTER] = LAYOUT_wrapper(LAYOUT_LAYER_POINTER),
   [LAYER_SYMBOLS] = LAYOUT_wrapper(LAYOUT_LAYER_SYMBOLS),
+  [LAYER_TILDES] = LAYOUT_wrapper(LAYOUT_LAYER_TILDES),  // Nueva capa
 };
 // clang-format on
 
@@ -249,6 +271,62 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 #    endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER
 #endif     // POINTING_DEVICE_ENABLE
+
+// ========== AGREGAR AQUÍ LA FUNCIÓN PROCESS_RECORD_USER ==========
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case MC_A_TILDE:
+            if (record->event.pressed) {
+                tap_code(KC_QUOT);
+                tap_code(KC_A);
+            }
+            return false;
+
+        case MC_E_TILDE:
+            if (record->event.pressed) {
+                tap_code(KC_QUOT);
+                tap_code(KC_E);
+            }
+            return false;
+
+        case MC_I_TILDE:
+            if (record->event.pressed) {
+                tap_code(KC_QUOT);
+                tap_code(KC_I);
+            }
+            return false;
+
+        case MC_O_TILDE:
+            if (record->event.pressed) {
+                tap_code(KC_QUOT);
+                tap_code(KC_O);
+            }
+            return false;
+
+        case MC_U_TILDE:
+            if (record->event.pressed) {
+                tap_code(KC_QUOT);
+                tap_code(KC_U);
+            }
+            return false;
+
+        case MC_N_TILDE:
+            if (record->event.pressed) {
+                tap_code(KC_QUOT);
+                tap_code(KC_N);
+            }
+            return false;
+
+            // simbolos
+        case MC_BCSL:
+            if (record->event.pressed) {
+                SEND_STRING("\\");
+            }
+            return false;
+    }
+    return true;
+}
+// ========== FIN DE LA FUNCIÓN ==========
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in
