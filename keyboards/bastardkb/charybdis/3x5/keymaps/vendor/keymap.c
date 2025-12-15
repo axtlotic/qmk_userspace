@@ -159,7 +159,7 @@ static uint16_t auto_pointer_layer_timer = 0;
  * `KC_RPRN`.
  */
 #define LAYOUT_LAYER_SYMBOLS                                                                  \
-    LALT(KC_QUOT), KC_CIRC, LSFT(KC_RBRC), KC_ASTR, LALT(KC_BSLS), _______________DEAD_HALF_ROW_______________, \
+    LALT(KC_QUOT), KC_CIRC, LSFT(KC_RBRC), LSFT(KC_7), LALT(KC_BSLS), _______________DEAD_HALF_ROW_______________, \
     KC_GRV,  KC_DLR, KC_PERC, LSFT(KC_LBRC), KC_RBRC, ______________HOME_ROW_GACS_R______________, \
     KC_EQL, KC_EXLM,   LALT(KC_2), LALT(KC_3), LALT(KC_1), _______________DEAD_HALF_ROW_______________, \
                       KC_ASTR, KC_LPRN, KC_UNDS, _______, XXXXXXX
@@ -240,12 +240,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     if (abs(mouse_report.x) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD || abs(mouse_report.y) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD) {
         if (auto_pointer_layer_timer == 0) {
             layer_on(LAYER_POINTER);
-#        ifdef RGB_MATRIX_ENABLE
-            rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
-            rgb_matrix_sethsv_noeeprom(HSV_GREEN);
-#        endif // RGB_MATRIX_ENABLE
-        }
-        auto_pointer_layer_timer = timer_read();
+        }        auto_pointer_layer_timer = timer_read();
     }
     return mouse_report;
 }
@@ -254,9 +249,6 @@ void matrix_scan_user(void) {
     if (auto_pointer_layer_timer != 0 && TIMER_DIFF_16(timer_read(), auto_pointer_layer_timer) >= CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS) {
         auto_pointer_layer_timer = 0;
         layer_off(LAYER_POINTER);
-#        ifdef RGB_MATRIX_ENABLE
-        rgb_matrix_mode_noeeprom(RGB_MATRIX_DEFAULT_MODE);
-#        endif // RGB_MATRIX_ENABLE
     }
 }
 #    endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
@@ -264,10 +256,33 @@ void matrix_scan_user(void) {
 #    ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
 layer_state_t layer_state_set_user(layer_state_t state) {
     charybdis_set_pointer_sniping_enabled(layer_state_cmp(state, CHARYBDIS_AUTO_SNIPING_ON_LAYER));
+    
+#ifdef RGB_MATRIX_ENABLE
+    switch (get_highest_layer(state)) {
+        case LAYER_POINTER:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+            rgb_matrix_sethsv_noeeprom(85, 255, 128);
+            break;
+        
+        case LAYER_SYMBOLS:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+            rgb_matrix_sethsv_noeeprom(28, 255, 128);
+            break;
+        
+        case LAYER_NUMERAL:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+            rgb_matrix_sethsv_noeeprom(43, 255, 128);
+            break;
+        
+        default:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_DEFAULT_MODE);
+            break;
+    }
+#endif
+    
     return state;
 }
 #    endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER
-#endif     // POINTING_DEVICE_ENABLE
 
 // ========== AGREGAR AQUÍ LA FUNCIÓN PROCESS_RECORD_USER ==========
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
