@@ -26,6 +26,16 @@
 #    define NO_ACTION_ONESHOT
 #endif // __arm__
 
+// init test
+#define RGB_MATRIX_LED_COUNT 35
+#define RGB_MATRIX_SPLIT {18, 17}
+#define RGB_DISABLE_WHEN_USB_SUSPENDED
+
+// Modo simple para test
+#define ENABLE_RGB_MATRIX_SOLID_COLOR
+#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_COLOR
+#define RGB_MATRIX_DEFAULT_VAL 255 // Brillo máximo para test
+
 /* Charybdis-specific features. */
 
 #ifdef POINTING_DEVICE_ENABLE

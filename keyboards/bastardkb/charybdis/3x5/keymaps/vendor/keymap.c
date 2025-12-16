@@ -16,6 +16,12 @@
  */
 #include QMK_KEYBOARD_H
 
+void keyboard_post_init_user(void) {
+    rgb_matrix_enable_noeeprom();
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_sethsv_noeeprom(0, 255, 255); // ROJO BRILLANTE
+}
+
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    include "timer.h"
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
@@ -240,7 +246,8 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     if (abs(mouse_report.x) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD || abs(mouse_report.y) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD) {
         if (auto_pointer_layer_timer == 0) {
             layer_on(LAYER_POINTER);
-        }        auto_pointer_layer_timer = timer_read();
+        }
+        auto_pointer_layer_timer = timer_read();
     }
     return mouse_report;
 }
@@ -256,30 +263,30 @@ void matrix_scan_user(void) {
 #    ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
 layer_state_t layer_state_set_user(layer_state_t state) {
     charybdis_set_pointer_sniping_enabled(layer_state_cmp(state, CHARYBDIS_AUTO_SNIPING_ON_LAYER));
-    
-#ifdef RGB_MATRIX_ENABLE
+
+#        ifdef RGB_MATRIX_ENABLE
     switch (get_highest_layer(state)) {
         case LAYER_POINTER:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
             rgb_matrix_sethsv_noeeprom(85, 255, 128);
             break;
-        
+
         case LAYER_SYMBOLS:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
             rgb_matrix_sethsv_noeeprom(28, 255, 128);
             break;
-        
+
         case LAYER_NUMERAL:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
             rgb_matrix_sethsv_noeeprom(43, 255, 128);
             break;
-        
+
         default:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_DEFAULT_MODE);
             break;
     }
-#endif
-    
+#        endif
+
     return state;
 }
 #    endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER
