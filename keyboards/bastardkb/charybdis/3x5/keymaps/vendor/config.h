@@ -59,4 +59,24 @@
 #    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS 1000
 #    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD 5
+
+// ========== CONFIGURACIÓN PARA MAYOR COMODIDAD DEL TRACKBALL ==========
+// Aumenta el DPI base para reducir movimiento físico necesario
+#    define CHARYBDIS_MINIMUM_DEFAULT_DPI 1600  // Aumentado de default (400-800)
+#    define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200  // Pasos de 200 DPI
+
+// Habilita aceleración del puntero
+#    define CHARYBDIS_POINTER_ACCELERATION_ENABLE
+#    define CHARYBDIS_POINTER_ACCELERATION_FACTOR 32  // Más agresivo (default: 24)
+
+// Suaviza el movimiento del cursor
+#    define CHARYBDIS_DRAGSCROLL_BUFFER_SIZE 6  // Balance entre suavidad y precisión
+
+// Configuración de sniping mode (precisión) - útil para trabajo detallado
+#    define CHARYBDIS_MINIMUM_SNIPING_DPI 400
+#    define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 100
+
+// Reduce el threshold para scroll más sensible
+#    define CHARYBDIS_DRAGSCROLL_REVERSE_X  // Descomenta si quieres invertir X
+// #    define CHARYBDIS_DRAGSCROLL_REVERSE_Y  // Descomenta si quieres invertir Y
 #endif // POINTING_DEVICE_ENABLE
