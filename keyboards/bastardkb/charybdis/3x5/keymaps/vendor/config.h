@@ -62,12 +62,12 @@
 
 // ========== CONFIGURACIÓN PARA MAYOR COMODIDAD DEL TRACKBALL ==========
 // Aumenta el DPI base para reducir movimiento físico necesario
-#    define CHARYBDIS_MINIMUM_DEFAULT_DPI 1600  // Aumentado de default (400-800)
+#    define CHARYBDIS_MINIMUM_DEFAULT_DPI 2000  // Aumentado de default (400-800)
 #    define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200  // Pasos de 200 DPI
 
 // Habilita aceleración del puntero
 #    define CHARYBDIS_POINTER_ACCELERATION_ENABLE
-#    define CHARYBDIS_POINTER_ACCELERATION_FACTOR 32  // Más agresivo (default: 24)
+#    define CHARYBDIS_POINTER_ACCELERATION_FACTOR 40  // Más agresivo (default: 24)
 
 // Suaviza el movimiento del cursor
 #    define CHARYBDIS_DRAGSCROLL_BUFFER_SIZE 6  // Balance entre suavidad y precisión
