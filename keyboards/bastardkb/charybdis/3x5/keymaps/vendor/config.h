@@ -28,15 +28,20 @@
 
 // ========== CONFIGURACIÓN RGB MATRIX ==========
 #ifdef RGB_MATRIX_ENABLE
-// Brillo reducido (era 150, ahora 80 = ~30% brillo)
+// Brillo reducido
 #    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 80
+
+// Primero eliminar las definiciones existentes, luego redefinir
+#    undef RGB_MATRIX_DEFAULT_VAL
+#    define RGB_MATRIX_DEFAULT_VAL 80 // Brillo medio
+
+#    undef RGB_MATRIX_DEFAULT_SPD
+#    define RGB_MATRIX_DEFAULT_SPD 127 // Velocidad media de animación
 
 // Modo por defecto: luz blanca suave con breathing (respiración)
 #    define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_BREATHING
-#    define RGB_MATRIX_DEFAULT_HUE 0   // Hue 0 (aunque usaremos blanco)
-#    define RGB_MATRIX_DEFAULT_SAT 0   // Saturación 0 = blanco puro
-#    define RGB_MATRIX_DEFAULT_VAL 80  // Brillo medio
-#    define RGB_MATRIX_DEFAULT_SPD 127 // Velocidad media de animación
+#    define RGB_MATRIX_DEFAULT_HUE 0 // Hue 0
+#    define RGB_MATRIX_DEFAULT_SAT 0 // Saturación 0 = blanco puro
 
 // Habilitar solo los efectos que necesitamos
 #    define ENABLE_RGB_MATRIX_BREATHING   // Respiración suave (para capa base)
