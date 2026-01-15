@@ -262,21 +262,23 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
         case LAYER_POINTER:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
-            rgb_matrix_sethsv_noeeprom(85, 255, 128);
+            rgb_matrix_sethsv_noeeprom(85, 255, 80); // 🟢 Verde - Brillo 80
             break;
 
         case LAYER_SYMBOLS:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
-            rgb_matrix_sethsv_noeeprom(28, 255, 128);
+            rgb_matrix_sethsv_noeeprom(16, 255, 80); // 🟠 Naranja más rojizo - Hue 16 (antes 28)
             break;
 
         case LAYER_NUMERAL:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
-            rgb_matrix_sethsv_noeeprom(43, 255, 128);
+            rgb_matrix_sethsv_noeeprom(43, 255, 80); // 🟡 Amarillo - Brillo 80
             break;
 
         default:
-            rgb_matrix_mode_noeeprom(RGB_MATRIX_DEFAULT_MODE);
+            // Volver a breathing blanco para capa base
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_BREATHING);
+            rgb_matrix_sethsv_noeeprom(0, 0, 80); // ⚪ Blanco respirando suavemente
             break;
     }
 #        endif
