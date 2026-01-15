@@ -36,7 +36,7 @@
 #    define RGB_MATRIX_DEFAULT_VAL 80 // Brillo medio
 
 #    undef RGB_MATRIX_DEFAULT_SPD
-#    define RGB_MATRIX_DEFAULT_SPD 32 // Velocidad media de animación
+#    define RGB_MATRIX_DEFAULT_SPD 15 // Velocidad media de animación
 
 // Modo por defecto: luz blanca suave con breathing (respiración)
 #    define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_BREATHING
