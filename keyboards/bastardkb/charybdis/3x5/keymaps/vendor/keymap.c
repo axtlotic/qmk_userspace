@@ -278,7 +278,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         default:
             // Volver a breathing blanco para capa base
             rgb_matrix_mode_noeeprom(RGB_MATRIX_BREATHING);
-            rgb_matrix_sethsv_noeeprom(0, 0, 80); // ⚪ Blanco respirando suavemente
+            rgb_matrix_sethsv_noeeprom(0, 0, 60); // ⚪ Blanco respirando suavemente
+            // rgb_matrix_set_speed_noeeprom(20);
             break;
     }
 #        endif
