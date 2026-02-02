@@ -335,3 +335,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
 #endif
+

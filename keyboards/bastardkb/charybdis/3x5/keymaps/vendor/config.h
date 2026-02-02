@@ -50,32 +50,49 @@
 // Sincronización para teclados split
 #    define CHARYBDIS_CONFIG_SYNC
 #endif // RGB_MATRIX_ENABLE
-/* Charybdis-specific features. */
+
 /* Charybdis-specific features. */
 
 #ifdef POINTING_DEVICE_ENABLE
-// Automatically enable the pointer layer when moving the trackball
+// ========== AUTO POINTER LAYER ==========
+// Se activa automáticamente al mover el trackball
 #    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-#    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS 1000
-#    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD 5
+// Aumentado a 1500ms: da más tiempo antes de desactivar la capa pointer,
+// evitando que se cicle activar/desactivar cuando haces movimientos cortos
+#    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS 1500
+// Subido a 8: requiere un movimiento más deliberado para activar la capa.
+// Con 5 se activaba con cualquier roce accidental.
+#    define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD 8
 
-// ========== CONFIGURACIÓN PARA MAYOR COMODIDAD DEL TRACKBALL ==========
-// Aumenta el DPI base para reducir movimiento físico necesario
-#    define CHARYBDIS_MINIMUM_DEFAULT_DPI 2000    // Aumentado de default (400-800)
-#    define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200 // Pasos de 200 DPI
+// ========== DPI BASE ==========
+// Bajado a 800. Con el trackball pequeño del Nano, 2000 causaba que
+// movimientos pequeños resultaran en saltos grandes del cursor.
+// 800 te da control fino; puedes subir con DPI_MOD si necesitas velocidad.
+#    define CHARYBDIS_MINIMUM_DEFAULT_DPI 800
+// Paso de 200 DPI para ajustar con DPI_MOD (toca la tecla en LAYER_POINTER)
+#    define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200
 
-// Habilita aceleración del puntero
-#    define CHARYBDIS_POINTER_ACCELERATION_ENABLE
-#    define CHARYBDIS_POINTER_ACCELERATION_FACTOR 40 // Más agresivo (default: 24)
+// ========== VELOCITY PROCESSING (clave para movimiento fluido) ==========
+// Esto reemplaza la aceleración agresiva. En lugar de un factor fijo que
+// "traga" movimientos pequeños, procesa la velocidad de forma suave:
+// movimientos lentos → cursor lento y preciso
+// movimientos rápidos → cursor rápido
+// Es lo más cercano a un mouse convencional sobre un trackball.
+#    define CHARYBDIS_POINTER_VELOCITY_PROCESSING_ENABLE
+// Factor de suavizado. Valores más altos = más suave pero más latencia.
+// 20 es un buen punto medio para el Nano.
+#    define CHARYBDIS_POINTER_VELOCITY_SLOWING_FACTOR 20
 
-// Suaviza el movimiento del cursor
-#    define CHARYBDIS_DRAGSCROLL_BUFFER_SIZE 6 // Balance entre suavidad y precisión
-
-// Configuración de sniping mode (precisión) - útil para trabajo detallado
-#    define CHARYBDIS_MINIMUM_SNIPING_DPI 400
+// ========== SNIPING (modo precisión) ==========
+// DPI que se activa al presionar SNIPING en LAYER_POINTER.
+// 300 DPI te da control muy fino para trabajo detallado.
+#    define CHARYBDIS_MINIMUM_SNIPING_DPI 300
 #    define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 100
 
-// Reduce el threshold para scroll más sensible
-#    define CHARYBDIS_DRAGSCROLL_REVERSE_X // Descomenta si quieres invertir X
-// #    define CHARYBDIS_DRAGSCROLL_REVERSE_Y  // Descomenta si quieres invertir Y
+// ========== DRAG SCROLL ==========
+// Bajado a 3. Con 6 el scroll tenía demasiado lag antes de responder.
+#    define CHARYBDIS_DRAGSCROLL_BUFFER_SIZE 3
+// Mantener la inversión de X si te funcionaba bien
+#    define CHARYBDIS_DRAGSCROLL_REVERSE_X
+// #    define CHARYBDIS_DRAGSCROLL_REVERSE_Y
 #endif // POINTING_DEVICE_ENABLE
