@@ -68,7 +68,7 @@
 // Bajado a 800. Con el trackball pequeño del Nano, 2000 causaba que
 // movimientos pequeños resultaran en saltos grandes del cursor.
 // 800 te da control fino; puedes subir con DPI_MOD si necesitas velocidad.
-#    define CHARYBDIS_MINIMUM_DEFAULT_DPI 2000
+#    define CHARYBDIS_MINIMUM_DEFAULT_DPI 1600
 // Paso de 200 DPI para ajustar con DPI_MOD (toca la tecla en LAYER_POINTER)
 #    define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200
 
@@ -81,7 +81,7 @@
 #    define CHARYBDIS_POINTER_VELOCITY_PROCESSING_ENABLE
 // Factor de suavizado. Valores más altos = más suave pero más latencia.
 // 20 es un buen punto medio para el Nano.
-#    define CHARYBDIS_POINTER_VELOCITY_SLOWING_FACTOR 12
+#    define CHARYBDIS_POINTER_VELOCITY_SLOWING_FACTOR 20
 
 // ========== SNIPING (modo precisión) ==========
 // DPI que se activa al presionar SNIPING en LAYER_POINTER.
